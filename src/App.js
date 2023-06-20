@@ -4,10 +4,13 @@ import React, { useState } from "react";
 
 const App = () => {
   const init = ['','','','','','','','',''];
+  const winPattern = ["","",""];
+  const [combo, setCombo] = useState(winPattern);
+  const greet = "Click any of the box and start the game(TicTacToe) player1 : x";
   const [board, setBoard] = useState(init);
   const [player, setPlayer] = useState("x");
   const [count, setCount] = useState(0);
-  const [intext, setIntext] = useState("Click any of the box and start the game(TicTacToe) player1 : x");
+  const [intext, setIntext] = useState(greet);
   const [endGame, setEndGame] = useState(false)
   
   const handleClick = (i) => {
@@ -28,6 +31,7 @@ const App = () => {
       if (board[arr[0]] === player && 
         board[arr[1]] === player && 
         board[arr[2]] === player){
+          setCombo([arr[0], arr[1], arr[2]]);
           co+=1;
           setIntext("Player '" + player + "' won the game.")
           // reset();
@@ -51,8 +55,9 @@ const App = () => {
           setBoard(init);
           setPlayer('x');
           setCount(0);
-          setIntext("Click any of the box and start the game(TicTacToe) player1 : x");
+          setIntext(greet);
           setEndGame(false);
+          setCombo(winPattern);
         }
         
   return (
@@ -60,7 +65,9 @@ const App = () => {
         <p className="text">{intext}</p>
     <div className="board">
         {board.map((val, i) => {
-          return <div key={i} className="board_tiles" onClick={() => handleClick(i)}>{val}</div>
+          return <div 
+          key={i} 
+          className={`board_tiles ${combo[0] !== '' ? ( (combo[0] === i || combo[1] === i || combo[2] === i ) ? 'winCombo' : '') : ''}`} onClick={() => handleClick(i)}>{val}</div>
         })}
     </div>
     <button onClick={reset}>Reset</button>

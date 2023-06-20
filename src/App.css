@@ -66,6 +66,10 @@ body {
   font-family: 'Russo One', sans-serif;
 }
 
+.winCombo {
+  background-color : #F86F03;
+}
+
 p {
   padding-bottom : 0;
   margin : 10;
